@@ -5,6 +5,7 @@ import com.sdw.book_management.model.Book;
 import com.sdw.book_management.service.BookService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,6 +33,13 @@ public class BookController {
         book.setAuthorId(bookDto.getAuthorId());
 
         return bookService.create(book);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        bookService.delete(id);
+
+        return ResponseEntity.noContent().build();
     }
 
 }

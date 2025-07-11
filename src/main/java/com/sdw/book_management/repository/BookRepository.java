@@ -28,4 +28,8 @@ public class BookRepository {
 
         return book;
     }
+
+    public void delete(Integer id) {
+        store.remove(id);
+    }
 }
