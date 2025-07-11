@@ -18,13 +18,17 @@ public class AuthorController {
     private final AuthorService authorService;
 
     @GetMapping
-    public List<Author> list() {
-        return authorService.getAll();
+    public ResponseEntity<List<Author>> list() {
+        List<Author> authors = authorService.getAll();
+
+        return ResponseEntity.ok(authors);
     }
 
     @GetMapping("/{id}")
-    public Author get(@PathVariable Integer id) {
-        return authorService.getById(id);
+    public ResponseEntity<Author> get(@PathVariable Integer id) {
+        Author author = authorService.getById(id);
+
+        return ResponseEntity.ok(author);
     }
 
     @PostMapping
