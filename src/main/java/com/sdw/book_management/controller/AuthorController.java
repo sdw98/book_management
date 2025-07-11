@@ -41,6 +41,19 @@ public class AuthorController {
         return ResponseEntity.created(URI.create("/api/authors/" + saved.getId())).body(saved);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Author> update(
+            @PathVariable Integer id,
+            @Valid @RequestBody AuthorDto authorDto
+    ) {
+        Author author = new Author();
+        author.setName(authorDto.getName());
+
+        Author updated = authorService.update(id, author);
+
+        return ResponseEntity.ok(updated);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         authorService.delete(id);
