@@ -5,8 +5,10 @@ import com.sdw.book_management.model.Author;
 import com.sdw.book_management.service.AuthorService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -26,10 +28,19 @@ public class AuthorController {
     }
 
     @PostMapping
-    public Author create(@Valid @RequestBody AuthorDto authorDto) {
+    public ResponseEntity<Author> create(@Valid @RequestBody AuthorDto authorDto) {
         Author author = new Author();
         author.setName(authorDto.getName());
 
-        return authorService.create(author);
+        Author saved = authorService.create(author);
+
+        return ResponseEntity.created(URI.create("/api/authors/" + saved.getId())).body(saved);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        authorService.delete(id);
+
+        return ResponseEntity.noContent().build();
     }
 }
