@@ -13,9 +13,7 @@ import java.util.NoSuchElementException;
 public class AuthorService {
     private final AuthorRepository authorRepository;
 
-    public List<Author> getAll() {
-        return authorRepository.findAll();
-    }
+    public List<Author> getAll() {return authorRepository.findAll();}
 
     public Author getById(Integer id) {
         return authorRepository.findById(id).orElseThrow(() -> new NoSuchElementException("저자 없음"));
@@ -25,8 +23,11 @@ public class AuthorService {
         return authorRepository.save(author);
     }
 
-    public Author update(Integer id, Author updateAuthor) {
-        return authorRepository.update(id, updateAuthor);
+    public Author update(Integer id, Author updatedAuthor) {
+        getById(id);
+        updatedAuthor.setId(id);
+
+        return authorRepository.save(updatedAuthor);
     }
 
     public void delete(Integer id) {
